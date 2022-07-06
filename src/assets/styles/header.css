@@ -1,0 +1,18 @@
+header {
+    background: var(--gradient);
+    height: 65px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.header-logo {
+    width: 180px;
+    height: 27px;
+}
+
+.header-description {
+    color: white;
+    text-shadow: 1px 1px black;
+}
