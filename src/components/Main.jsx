@@ -26,14 +26,27 @@ export default function Main() {
         console.log(meme.randomImage)
     }
 
+    // Updating the text state
+    function textChange(event) {
+        const {name, value} = event.target;
+
+        setMeme((prevMeme) => {
+            return {...prevMeme, [name]: value}
+        })
+    }
+
+    console.log(meme)
+
     return (
         <main>
             <div className='form'>
-                <input type="text" />
-                <input type="text" />
+                <input type="text" name="topText" onChange={textChange} />
+                <input type="text" name="bottomText" onChange={textChange} />
                 <button onClick={getMemeImage}>Get a new meme image 🖼️</button>
                 <div id='meme-generated'>
                     <img src={meme.randomImage} className='meme-image' />
+                    <h2 className="meme-text top">{meme.topText}</h2>
+                    <h2 className="meme-text bottom">{meme.bottomText}</h2>
                 </div>
             </div>
         </main>
