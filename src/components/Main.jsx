@@ -1,29 +1,24 @@
-import React, {useState} from 'react'
-import Data from '../memesData'
+import React, {useState, useEffect} from 'react'
 import '../assets/styles/main.css'
 
 export default function Main() {
-    const [allMemeImages, setAllMemeImages] = useState(Data.data.memes)
+    const [allMemes, setAllMemes] = useState({});
 
-    // colocando a primeira imagem pra ser a primeira do BD
     const [meme, setMeme] = useState({
         topText: "",
         bottomText: "",
         randomImage: "http://i.imgflip.com/1bij.jpg"
     });
 
-    const getMemeImage = () => {
-        // finds a random index
-        const randomIndex = Math.floor(Math.random() * Data.data.memes.length);
-
-        // assigns it to variable memeUrl
-        const memeUrl = Data.data.memes[randomIndex].url;
-        console.log(memeUrl)
-
-        setMeme((prevMeme) => {
-            return {...prevMeme, randomImage: memeUrl}
-        })
-        console.log(meme.randomImage)
+    function getMemeImage() {
+        const memesArray = allMemes.data.memes
+        const randomNumber = Math.floor(Math.random() * memesArray.length)
+        const url = memesArray[randomNumber].url
+        setMeme(prevMeme => ({
+            ...prevMeme,
+            randomImage: url
+        }))
+        
     }
 
     // Updating the text state
@@ -35,7 +30,12 @@ export default function Main() {
         })
     }
 
-    console.log(meme)
+    useEffect(()=> {
+        fetch("https://api.imgflip.com/get_memes")
+        .then(res => res.json())
+        .then(data => setAllMemes(data))
+    }, [])
+
 
     return (
         <main>
